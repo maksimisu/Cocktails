@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Cocktails</string>
+    <string name="ordinary_drink">Ordinary drink</string>
+    <string name="cocktail">Cocktail</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

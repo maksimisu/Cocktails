@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/navigation_main">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/ordinaryDrinksFragment">
 
+    <fragment
+        android:id="@+id/ordinaryDrinksFragment"
+        android:name="com.maksimisu.cocktails.ui.fragments.OrdinaryDrinksFragment"
+        android:label="fragment_ordinary_drinks"
+        tools:layout="@layout/fragment_ordinary_drinks" >
+        <action
+            android:id="@+id/action_ordinaryDrinksFragment_to_cocktailsFragment"
+            app:destination="@id/cocktailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cocktailsFragment"
+        android:name="com.maksimisu.cocktails.ui.fragments.CocktailsFragment"
+        android:label="fragment_cocktails"
+        tools:layout="@layout/fragment_cocktails" >
+        <action
+            android:id="@+id/action_cocktailsFragment_to_ordinaryDrinksFragment"
+            app:destination="@id/ordinaryDrinksFragment" />
+    </fragment>
 </navigation>

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/ordinaryDrinksFragment"
+        android:title="@string/ordinary_drink"
+        android:icon="@drawable/ic_ordinary_drink" />
+
+    <item
+        android:id="@+id/cocktailsFragment"
+        android:title="@string/cocktail"
+        android:icon="@drawable/ic_cocktail" />
+
 </menu>
