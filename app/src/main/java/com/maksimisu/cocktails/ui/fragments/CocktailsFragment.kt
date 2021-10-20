@@ -1,6 +1,7 @@
 package com.maksimisu.cocktails.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,9 @@ import com.maksimisu.cocktails.data.Cocktail
 import com.maksimisu.cocktails.databinding.FragmentCocktailsBinding
 import com.maksimisu.cocktails.ui.CocktailsListAdapter
 import kotlinx.coroutines.DelicateCoroutinesApi
-import retrofit2.Response
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 @DelicateCoroutinesApi
 class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
@@ -23,6 +26,8 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
     private lateinit var cocktailsList: MutableList<Cocktail>
 
+    private val TAG_NETWORKING = "NETWORKING"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,25 +36,39 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
         cocktailsList = mutableListOf()
 
-        lifecycleScope.launchWhenCreated {
-            val response: Response<List<Cocktail>> = try {
-                RetrofitInstance.api.getData("/api/json/v1/1/filter.php?c=Ordinary_Drink")
-            } finally {
+        view.apply {
+            binding = FragmentCocktailsBinding.inflate(layoutInflater)
 
+            cocktailsListAdapter = CocktailsListAdapter()
+            binding.rvCocktails.adapter = cocktailsListAdapter
+            binding.rvCocktails.layoutManager = LinearLayoutManager(this?.context)
+        }
+
+        return this.view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val response = try {
+                RetrofitInstance.api.getData("1")
+            } catch (e: IOException) {
+                Log.e(TAG_NETWORKING, "IOException")
+                return@launch
+            } catch (e: HttpException) {
+                Log.e(TAG_NETWORKING, "HttpException")
+                return@launch
             }
 
             if(response.isSuccessful && response.body() != null) {
-                for(i in response.body()!!) {
-                    cocktailsList.add(i)
-                }
+                val body = response.body()!!.cocktails
+                cocktailsList = body as MutableList<Cocktail>
+                cocktailsListAdapter.notifyDataSetChanged()
+            } else {
+                Log.d(TAG_NETWORKING, "Something went wrong.")
             }
         }
-
-        binding = FragmentCocktailsBinding.inflate(layoutInflater)
-
-        cocktailsListAdapter = CocktailsListAdapter(cocktailsList)
-        binding.rvCocktails.adapter = cocktailsListAdapter
-        binding.rvCocktails.layoutManager = LinearLayoutManager(this.context)
 
         cocktailsListAdapter.setOnItemClickListener(object :
             CocktailsListAdapter.OnItemClickListener {
@@ -57,8 +76,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
             }
         })
-
-        return null
     }
 
 }

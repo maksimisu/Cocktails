@@ -2,13 +2,13 @@ package com.maksimisu.cocktails.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.maksimisu.cocktails.data.Cocktail
 import com.maksimisu.cocktails.databinding.ItemCoktailBinding
 
-class CocktailsListAdapter(
-    private val cocktailsList: MutableList<Cocktail>
-) : RecyclerView.Adapter<CocktailsListAdapter.CocktailsListViewHolder>() {
+class CocktailsListAdapter : RecyclerView.Adapter<CocktailsListAdapter.CocktailsListViewHolder>() {
 
     private lateinit var mListener: OnItemClickListener
 
@@ -38,7 +38,22 @@ class CocktailsListAdapter(
         return cocktailsList.size
     }
 
-    class CocktailsListViewHolder(
+    private val diffCallback = object : DiffUtil.ItemCallback<Cocktail>() {
+        override fun areItemsTheSame(oldItem: Cocktail, newItem: Cocktail): Boolean {
+            return oldItem.idDrink == newItem.idDrink
+        }
+
+        override fun areContentsTheSame(oldItem: Cocktail, newItem: Cocktail): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
+    var cocktailsList: List<Cocktail>
+    get() = differ.currentList
+    set(value) { differ.submitList(value) }
+
+    inner class CocktailsListViewHolder(
         private val binding: ItemCoktailBinding,
         listener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -50,7 +65,8 @@ class CocktailsListAdapter(
         }
 
         fun bind(item: Cocktail) = with(binding) {
-            tvName.text = item.strDrink
+            val cocktail = cocktailsList[adapterPosition]
+            tvName.text = cocktail.strDrink
         }
 
     }
