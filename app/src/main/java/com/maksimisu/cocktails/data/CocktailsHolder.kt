@@ -1,3 +1,3 @@
 package com.maksimisu.cocktails.data
 
-data class CocktailsHolder(val cocktails: List<Cocktail>)
+data class CocktailsHolder(val drinks: List<Cocktail>)

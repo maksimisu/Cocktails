@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.maksimisu.cocktails.R
 import com.maksimisu.cocktails.databinding.ActivityMainBinding
+import com.maksimisu.cocktails.databinding.FragmentCocktailsBinding
+import com.maksimisu.cocktails.databinding.FragmentOrdinaryDrinksBinding
 
 class MainActivity : AppCompatActivity() {
 

@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.maksimisu.cocktails.R
 import com.maksimisu.cocktails.RetrofitInstance
 import com.maksimisu.cocktails.data.Cocktail
+import com.maksimisu.cocktails.data.Constants.Companion.TAG_NETWORKING
 import com.maksimisu.cocktails.databinding.FragmentCocktailsBinding
 import com.maksimisu.cocktails.ui.CocktailsListAdapter
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -25,8 +27,6 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     private lateinit var cocktailsListAdapter: CocktailsListAdapter
 
     private lateinit var cocktailsList: MutableList<Cocktail>
-
-    private val TAG_NETWORKING = "NETWORKING"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,9 +50,9 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             val response = try {
-                RetrofitInstance.api.getData("1")
+                RetrofitInstance.api.getCocktails("1")
             } catch (e: IOException) {
                 Log.e(TAG_NETWORKING, "IOException")
                 return@launch
@@ -62,8 +62,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
             }
 
             if(response.isSuccessful && response.body() != null) {
-                val body = response.body()!!.cocktails
-                cocktailsList = body as MutableList<Cocktail>
+                cocktailsListAdapter.cocktailsList = response.body()!!.drinks
                 cocktailsListAdapter.notifyDataSetChanged()
             } else {
                 Log.d(TAG_NETWORKING, "Something went wrong.")
