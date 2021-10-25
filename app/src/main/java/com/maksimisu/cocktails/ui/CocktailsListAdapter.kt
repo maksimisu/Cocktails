@@ -31,7 +31,7 @@ class CocktailsListAdapter : RecyclerView.Adapter<CocktailsListAdapter.Cocktails
     }
 
     override fun onBindViewHolder(holder: CocktailsListViewHolder, position: Int) {
-        holder.bind(cocktailsList[position])
+        holder.bind()
     }
 
     override fun getItemCount(): Int {
@@ -64,7 +64,7 @@ class CocktailsListAdapter : RecyclerView.Adapter<CocktailsListAdapter.Cocktails
             }
         }
 
-        fun bind(item: Cocktail) = with(binding) {
+        fun bind() = with(binding) {
             val cocktail = cocktailsList[adapterPosition]
             tvName.text = cocktail.strDrink
         }
