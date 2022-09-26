@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/ordinaryDrinksFragment"
-        android:title="@string/ordinary_drink"
-        android:icon="@drawable/ic_ordinary_drink" />
+        android:icon="@drawable/ic_ordinary_drink"
+        android:title="@string/ordinary_drink" />
 
     <item
         android:id="@+id/cocktailsFragment"

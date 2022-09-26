@@ -5,6 +5,7 @@ class Constants {
     companion object {
         const val TAG_NETWORKING = "NETWORKING"
         const val BASE_URL = "https://thecocktaildb.com"
+        const val API_KEY = 1
     }
 
 }

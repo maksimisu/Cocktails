@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.maksimisu.cocktails.R
 import com.maksimisu.cocktails.RetrofitInstance
-import com.maksimisu.cocktails.data.Cocktail
+import com.maksimisu.cocktails.data.CocktailItem
 import com.maksimisu.cocktails.data.Constants.Companion.TAG_NETWORKING
 import com.maksimisu.cocktails.databinding.FragmentOrdinaryDrinksBinding
 import com.maksimisu.cocktails.ui.CocktailsListAdapter
@@ -25,8 +25,7 @@ class OrdinaryDrinksFragment : Fragment(R.layout.fragment_ordinary_drinks) {
 
     private lateinit var binding: FragmentOrdinaryDrinksBinding
     private lateinit var cocktailsListAdapter: CocktailsListAdapter
-
-    private lateinit var cocktailsList: MutableList<Cocktail>
+    private lateinit var cocktailsList: MutableList<CocktailItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +40,7 @@ class OrdinaryDrinksFragment : Fragment(R.layout.fragment_ordinary_drinks) {
         val view = binding.root
 
         binding.rvOrdinaryDrinks.apply {
-            cocktailsListAdapter = CocktailsListAdapter()
+            cocktailsListAdapter = CocktailsListAdapter(this.context)
             adapter = cocktailsListAdapter
             layoutManager = LinearLayoutManager(this.context)
         }
@@ -54,7 +53,7 @@ class OrdinaryDrinksFragment : Fragment(R.layout.fragment_ordinary_drinks) {
 
         lifecycleScope.launchWhenCreated {
             val response = try {
-                RetrofitInstance.api.getOrdinaryDrinks("1")
+                RetrofitInstance.api.getOrdinaryDrinks()
             } catch (e: IOException) {
                 Log.e(TAG_NETWORKING, "IOException")
                 return@launchWhenCreated
@@ -81,7 +80,7 @@ class OrdinaryDrinksFragment : Fragment(R.layout.fragment_ordinary_drinks) {
         binding.ordinaryDrinksRefresher.setOnRefreshListener {
             lifecycleScope.launchWhenCreated {
                 val response = try {
-                    RetrofitInstance.api.getOrdinaryDrinks("1").also {
+                    RetrofitInstance.api.getOrdinaryDrinks().also {
                         binding.ordinaryDrinksRefresher.isRefreshing = false
                     }
                 } catch (e: IOException) {

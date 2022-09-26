@@ -3,14 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/activity_detailed.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_cocktail.xml" value="0.167" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_favorite.xml" value="0.274" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_launcher_background.xml" value="0.167" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_ordinary_drink.xml" value="0.274" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/drawable/ic_update.xml" value="0.274" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/activity_detailed.xml" value="0.25" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/activity_favorite.xml" value="0.3188405797101449" />
         <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/activity_launcher.xml" value="0.34646739130434784" />
         <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/activity_main.xml" value="0.34646739130434784" />
-        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/fragment_cocktails.xml" value="0.3383152173913043" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/fragment_cocktails.xml" value="0.33" />
         <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/fragment_datailed.xml" value="0.3383152173913043" />
-        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/fragment_ordinary_drinks.xml" value="0.3383152173913043" />
-        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/item_coktail.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/fragment_ordinary_drinks.xml" value="0.25" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/layout/item_coktail.xml" value="0.25" />
         <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.1859375" />
+        <entry key="..\:/Users/maksi/AndroidStudioProjects/Cocktails/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

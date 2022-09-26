@@ -2,7 +2,6 @@ package com.maksimisu.cocktails.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.maksimisu.cocktails.RetrofitInstance
@@ -29,7 +28,7 @@ class DetailedActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenCreated {
             val response = try {
-                RetrofitInstance.api.getDrinkById("1", id)
+                RetrofitInstance.api.getDrinkById(id)
             } catch (e: IOException) {
                 Log.e(Constants.TAG_NETWORKING, "IOException")
                 return@launchWhenCreated
@@ -38,10 +37,11 @@ class DetailedActivity : AppCompatActivity() {
                 return@launchWhenCreated
             }
             if(response.isSuccessful && response.body() != null) {
-                drink = response.body()!!
+                drink = response.body()!!.drinks[0]
                 runOnUiThread {
                     binding.tvDetailedName.text = drink.strDrink
-                    binding.tvDetailedId.text = drink.idDrink
+                    binding.tvDetailedCategory.text = drink.strCategory
+                    binding.tvDetailedInstructions.text = drink.strInstructions
                     Picasso.with(this@DetailedActivity).load(drink.strDrinkThumb).into(binding.ivDetailedIcon)
                 }
             } else {

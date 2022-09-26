@@ -1,16 +1,19 @@
 package com.maksimisu.cocktails.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.maksimisu.cocktails.data.Cocktail
+import com.maksimisu.cocktails.data.CocktailItem
 import com.maksimisu.cocktails.databinding.ItemCoktailBinding
+import com.squareup.picasso.Picasso
 
-class CocktailsListAdapter : RecyclerView.Adapter<CocktailsListAdapter.CocktailsListViewHolder>() {
+class CocktailsListAdapter(context: Context) : RecyclerView.Adapter<CocktailsListAdapter.CocktailsListViewHolder>() {
 
     private lateinit var mListener: OnItemClickListener
+    private val currentContext = context
 
     interface OnItemClickListener {
         fun onClick(position: Int)
@@ -38,24 +41,24 @@ class CocktailsListAdapter : RecyclerView.Adapter<CocktailsListAdapter.Cocktails
         return cocktailsList.size
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Cocktail>() {
-        override fun areItemsTheSame(oldItem: Cocktail, newItem: Cocktail): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<CocktailItem>() {
+        override fun areItemsTheSame(oldItem: CocktailItem, newItem: CocktailItem): Boolean {
             return oldItem.idDrink == newItem.idDrink
         }
 
-        override fun areContentsTheSame(oldItem: Cocktail, newItem: Cocktail): Boolean {
+        override fun areContentsTheSame(oldItem: CocktailItem, newItem: CocktailItem): Boolean {
             return oldItem == newItem
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var cocktailsList: List<Cocktail>
+    var cocktailsList: List<CocktailItem>
     get() = differ.currentList
     set(value) { differ.submitList(value) }
 
     inner class CocktailsListViewHolder(
         private val binding: ItemCoktailBinding,
-        listener: OnItemClickListener
+        listener: OnItemClickListener,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -67,6 +70,7 @@ class CocktailsListAdapter : RecyclerView.Adapter<CocktailsListAdapter.Cocktails
         fun bind() = with(binding) {
             val cocktail = cocktailsList[adapterPosition]
             tvName.text = cocktail.strDrink
+            Picasso.with(currentContext).load(cocktail.strDrinkThumb).into(ivIcon)
         }
 
     }

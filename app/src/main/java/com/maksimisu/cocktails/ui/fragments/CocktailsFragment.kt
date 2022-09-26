@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.maksimisu.cocktails.R
 import com.maksimisu.cocktails.RetrofitInstance
-import com.maksimisu.cocktails.data.Cocktail
+import com.maksimisu.cocktails.data.CocktailItem
 import com.maksimisu.cocktails.data.Constants.Companion.TAG_NETWORKING
 import com.maksimisu.cocktails.databinding.FragmentCocktailsBinding
 import com.maksimisu.cocktails.ui.CocktailsListAdapter
@@ -25,8 +25,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
     private lateinit var binding: FragmentCocktailsBinding
     private lateinit var cocktailsListAdapter: CocktailsListAdapter
-
-    private lateinit var cocktailsList: MutableList<Cocktail>
+    private lateinit var cocktailsList: MutableList<CocktailItem>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +40,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         val view = binding.root
 
         binding.rvCocktails.apply {
-            cocktailsListAdapter = CocktailsListAdapter()
+            cocktailsListAdapter = CocktailsListAdapter(this.context)
             adapter = cocktailsListAdapter
             layoutManager = LinearLayoutManager(this.context)
         }
@@ -54,7 +53,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
 
         lifecycleScope.launchWhenCreated {
             val response = try {
-                RetrofitInstance.api.getCocktails("1")
+                RetrofitInstance.api.getCocktails()
             } catch (e: IOException) {
                 Log.e(TAG_NETWORKING, "IOException")
                 return@launchWhenCreated
@@ -82,7 +81,7 @@ class CocktailsFragment : Fragment(R.layout.fragment_cocktails) {
         binding.cocktailsRefresher.setOnRefreshListener {
             lifecycleScope.launchWhenCreated {
                 val response = try {
-                    RetrofitInstance.api.getCocktails("1").also {
+                    RetrofitInstance.api.getCocktails().also {
                         binding.cocktailsRefresher.isRefreshing = false
                     }
                 } catch (e: IOException) {
